@@ -26,7 +26,7 @@ public class Main {
                 // Print the error message if decoding fails n
                 System.out.println(e.getMessage());
             }
-        }
+        } 
         else if("info".equals(command)){
             try{
             String filePath = args[1];
