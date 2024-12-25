@@ -11,8 +11,7 @@ import java.nio.file.Path;
 public class Main {
     private static final Gson gson = new Gson();
 
-    public static void main(String[] args) ;{
-        /
+    public static void main(String[] args) {
         String command = args[0];
         if ("decode".equals(command)) {
             String bencodedValue = args[1];
