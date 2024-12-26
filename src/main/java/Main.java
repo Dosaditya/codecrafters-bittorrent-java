@@ -33,14 +33,14 @@ public class Main {
 			Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
             System.out.println("Tracker URL: " + torrent.announce);
 			System.out.println("Length: " + torrent.length);
-            System.out.println("Info Hash: "+bytesToHex(torrent.infoHash));
+            System.out.println("Info Hash: "+Util.bytesToHex(torrent.infoHash));
             System.out.println("Piece Length: "+torrent.plength);
             System.out.println("Piece Hashes: ");
-            byte[]piecesBytes =torrent.Hash;
+            byte[]piecesBytes =torrent.Hash; 
             for (int i = 0; i < piecesBytes.length; i += 20) {
                 byte[] hashBytes = new byte[20];
                 System.arraycopy(piecesBytes, i, hashBytes, 0, 20); // Extract each 20-byte chunk
-                System.out.println(bytesToHex(hashBytes)); // Convert to hex
+                System.out.println(Util.bytesToHex(hashBytes)); // Convert to hex
             }
 
             }
@@ -48,6 +48,10 @@ public class Main {
                 // Handle the exception
                 System.err.println("An IOException occurred: " + e.getMessage());
             }
+        }
+        else if("peers".equals(command)){
+            String filePath = args[1];
+			Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
         }
          else {
             System.out.println("Unknown command: " + command);
@@ -85,13 +89,7 @@ public class Main {
         }
     }
 
-    private static String bytesToHex(byte[] bytes){
-        StringBuilder sb = new StringBuilder();
-        for (byte b:bytes){
-          sb.append(String.format("%02x",b));
-        }
-              return sb.toString();  
-        }
+    
 
         
 }
