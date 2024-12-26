@@ -49,10 +49,7 @@ public class Main {
                 System.err.println("An IOException occurred: " + e.getMessage());
             }
         }
-        else if("peers".equals(command)){
-            String filePath = args[1];
-			Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
-        }
+        
          else {
             System.out.println("Unknown command: " + command);
         }
