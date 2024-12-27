@@ -35,8 +35,9 @@ public class HttpRequest{
             httpGet.addHeader("left",URLEncoder.encode(String.valueOf(torrent.length),StandardCharsets.UTF_8));
             httpGet.addHeader("compact",URLEncoder.encode("1",StandardCharsets.UTF_8));
 
-            try(CloseableHttpResponse response =httpClient.execute(httpget)){
-                
+            
+            HttpResponse response = httpClient.executeOpen(null, HttpRequest, null); 
+
                 if(response.getCode()!=200){
                     System.out.println("Somethings Wrong");
                 }
@@ -59,7 +60,8 @@ public class HttpRequest{
 
 
                 }
-            }
+
+        }
             catch (Exception e) {
                 e.printStackTrace();
             }
