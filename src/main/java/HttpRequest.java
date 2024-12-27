@@ -23,7 +23,7 @@ public class HttpRequest{
             String infoHash = new String(Util.bytesToHex(torrent.infoHash),
                 StandardCharsets.ISO_8859_1);
             byte[] peerIdBytes = Util.getRandomBytes(10);
-            String peerId = Util.byteToHex(peerIdBytes);    
+            String peerId = Util.bytesToHex(peerIdBytes);    
 
 
             HttpGet httpGet=new HttpGet(url);
