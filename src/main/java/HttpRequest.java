@@ -1,4 +1,4 @@
-import org.apache.hc.client5.http.classic.methods.CloseableHttpResponse;
+//import org.apache.hc.client5.http.classic.methods.CloseableHttpResponse;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
@@ -26,7 +26,7 @@ public class HttpRequest{
             String peerId = Util.bytesToHex(peerIdBytes);    
 
 
-            HttpGet httpGet=new HttpGet(url);
+            HttpGet httpget=new HttpGet(url);
             httpGet.addHeader("info_hash",URLEncoder.encode(infoHash,StandardCharsets.UTF_8));
             httpGet.addHeader("peer_id",URLEncoder.encode(peerId,StandardCharsets.UTF_8));
             httpGet.addHeader("port", URLEncoder.encode("6881",StandardCharsets.UTF_8));
@@ -35,7 +35,7 @@ public class HttpRequest{
             httpGet.addHeader("left",URLEncoder.encode(String.valueOf(torrent.length),StandardCharsets.UTF_8));
             httpGet.addHeader("compact",URLEncoder.encode("1",StandardCharsets.UTF_8));
 
-            try(CloseableHttpResponse response =httpClient.execute(httpGet)){
+            try(CloseableHttpResponse response =httpClient.execute(httpget)){
                 
                 if(response.getCode()!=200){
                     System.out.println("Somethings Wrong");
