@@ -1,4 +1,4 @@
-//import org.apache.hc.client5.http.classic.methods.CloseableHttpResponse;
+import org.apache.hc.client5.http.classic.methods.CloseableHttpResponse;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
@@ -37,7 +37,7 @@ public class HttpRequest{
             httpGet.addHeader("compact",URLEncoder.encode("1",StandardCharsets.UTF_8));
 
             
-            HttpResponse response = httpClient.executeOpen(null, httpGet, null); 
+            HttpResponse response = (ClassicHttpResponse)httpClient.executeOpen(null, httpGet, null); 
 
                 if(response.getCode()!=200){
                     System.out.println("Somethings Wrong");
