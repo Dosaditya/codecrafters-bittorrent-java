@@ -26,7 +26,7 @@ public class HttpRequest{
             String peerId = Util.bytesToHex(peerIdBytes);    
 
 
-            HttpGet httpget=new HttpGet(url);
+            HttpGet httpGet=new HttpGet(url);
             httpGet.addHeader("info_hash",URLEncoder.encode(infoHash,StandardCharsets.UTF_8));
             httpGet.addHeader("peer_id",URLEncoder.encode(peerId,StandardCharsets.UTF_8));
             httpGet.addHeader("port", URLEncoder.encode("6881",StandardCharsets.UTF_8));
@@ -36,7 +36,7 @@ public class HttpRequest{
             httpGet.addHeader("compact",URLEncoder.encode("1",StandardCharsets.UTF_8));
 
             
-            HttpResponse response = httpClient.executeOpen(null, HttpRequest, null); 
+            HttpResponse response = httpClient.executeOpen(null, httpGet, null); 
 
                 if(response.getCode()!=200){
                     System.out.println("Somethings Wrong");
