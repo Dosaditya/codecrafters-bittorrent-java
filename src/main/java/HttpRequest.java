@@ -20,7 +20,7 @@ public class HttpRequest{
         try(CloseableHttpClient httpClient = HttpClients.createDefault()){
             
             String url=torrent.announce;
-            String infoHash = Util.bytesToHex;
+            String infoHash = Util.bytesToHex(torrent.infoHash);
         
             byte[] peerIdBytes = Util.getRandomBytes(10);
             String peerId = Util.bytesToHex(peerIdBytes);    
