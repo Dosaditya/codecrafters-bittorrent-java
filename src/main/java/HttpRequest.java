@@ -12,7 +12,7 @@ public class HttpRequest{
      
     
 
-    public static request(Torrent torrent){
+    public static void request(Torrent torrent){
         
         
         try(CloseableHttpClient httpClient = HttpClients.createDefault()){
