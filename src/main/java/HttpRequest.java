@@ -8,6 +8,7 @@ import com.dampcake.bencode.Bencode;
 import com.dampcake.bencode.Type;
 import java.util.*;
 import java.nio.ByteBuffer;
+import java.net.URLEncoder;
 
 public class HttpRequest{
      
