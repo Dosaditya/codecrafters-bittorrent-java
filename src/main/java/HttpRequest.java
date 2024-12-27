@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import com.dampcake.bencode.Bencode;
 import com.dampcake.bencode.Type;
 import java.util.*;
+import java.nio.ByteBuffer;
 
 public class HttpRequest{
      
@@ -17,8 +18,8 @@ public class HttpRequest{
         
         try(CloseableHttpClient httpClient = HttpClients.createDefault()){
             
-            String url=torrent.getTrackerURL();
-            String infoHash = new String(Utils.hexStringToByteArray(torrent.getInfoHash()),
+            String url=torrent.announce;
+            String infoHash = new String(Util.bytesToHex(torrent.infoHash),
                 StandardCharsets.ISO_8859_1);
             byte[] peerIdBytes = Util.getRandomBytes(10);
             String peerId = Util.byteToHexString(peerIdBytes);    
@@ -26,14 +27,14 @@ public class HttpRequest{
 
             HttpGet httpGet=new HttpGet(url);
             httpGet.addHeader("info_hash",URLEncoder.encode(infoHash,StandardCharsets.UTF_8));
-            httpGet.addHeader("peer_id",URLEncoder.encode(peer_id,StandardCharsets.UTF_8));
+            httpGet.addHeader("peer_id",URLEncoder.encode(peerId,StandardCharsets.UTF_8));
             httpGet.addHeader("port", URLEncoder.encode("6881",StandardCharsets.UTF_8));
             httpGet.addHeader("uploaded",URLEncoder.encode("0",StandardCharsets.UTF_8));
             httpGet.addHeader("downloaded",URLEncoder.encode(infoHash,StandardCharsets.UTF_8));
             httpGet.addHeader("left",URLEncoder.encode(String.valueOf(torrent.length),StandardCharsets.UTF_8));
             httpGet.addHeader("compact",URLEncoder.encode("1",StandardCharsets.UTF_8));
 
-            try(CloseableHttpResponse reponse=httpClient.execute(httpGet)){
+            try(CloseableHttpResponse response=httpClient.execute(httpGet)){
                 
                 if(response.getCode()!=200){
                     System.out.println("Somethings Wrong");
