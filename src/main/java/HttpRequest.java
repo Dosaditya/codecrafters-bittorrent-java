@@ -44,7 +44,7 @@ public class HttpRequest{
                     byte[] responseBytes = EntityUtils.toByteArray(response.getEntity());
                     Bencode bencode=new Bencode(true);
                     Map<String ,Object> decodedResponse=bencode.decode(responseBytes,Type.DICTIONARY);
-                    byte[] peerBytes=((ByteBuffer)decodedResponse.get("peers")).array();
+                    byte[] peersBytes=((ByteBuffer)decodedResponse.get("peers")).array();
 
                     List<String> peerList = new ArrayList<>();
                         for (int i = 0; i < peersBytes.length; i += 6) {
