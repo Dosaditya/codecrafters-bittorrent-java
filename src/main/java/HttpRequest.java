@@ -22,7 +22,7 @@ public class HttpRequest{
             String infoHash = new String(Util.bytesToHex(torrent.infoHash),
                 StandardCharsets.ISO_8859_1);
             byte[] peerIdBytes = Util.getRandomBytes(10);
-            String peerId = Util.byteToHexString(peerIdBytes);    
+            String peerId = Util.byteToHex(peerIdBytes);    
 
 
             HttpGet httpGet=new HttpGet(url);
@@ -34,7 +34,7 @@ public class HttpRequest{
             httpGet.addHeader("left",URLEncoder.encode(String.valueOf(torrent.length),StandardCharsets.UTF_8));
             httpGet.addHeader("compact",URLEncoder.encode("1",StandardCharsets.UTF_8));
 
-            try(CloseableHttpResponse response=httpClient.execute(httpGet)){
+            try(CloseableHttpResponse response =httpClient.execute(httpGet)){
                 
                 if(response.getCode()!=200){
                     System.out.println("Somethings Wrong");
