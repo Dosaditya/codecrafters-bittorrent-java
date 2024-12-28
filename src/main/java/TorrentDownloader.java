@@ -43,13 +43,13 @@ public class TorrentDownloader{
         String peerId = Util.bytesToHex(peerIdBytes);
 
         HttpClientService httpClientService = new HttpClientService();
-        String requestURL = httpClientService.newRequestURLBuilder(torrent.getTrackerURL())
+        String requestURL = httpClientService.newRequestURLBuilder(torrent.announce)
                 .addParam("info_hash", infoHash)
                 .addParam("peer_id", peerId)
                 .addParam("port", String.valueOf(PORT))
                 .addParam("uploaded", "0")
                 .addParam("downloaded", "0")
-                .addParam("left", String.valueOf(torrent.getLength()))
+                .addParam("left", String.valueOf(torrent.length))
                 .addParam("compact", "1")
                 .build();
 
