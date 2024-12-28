@@ -53,7 +53,7 @@ public class Main {
             try{
             String filePath = args[1];
 			Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
-            HttpRequest.request(torrent);
+            HttpClass.request(torrent);
             }
             catch (Exception e) {
                 // Handle the exception
