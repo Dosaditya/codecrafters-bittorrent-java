@@ -51,9 +51,10 @@ public class Main {
             }
         }
         else if("peers".equals(command)){
-            String filePath = args[1];
-			Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
+            
             try{
+                String filePath = args[1];
+			    Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
                 peerList = TorrentDownloader.getPeerList(torrent);
                 for (String peer : peerList) {
                     System.out.println(peer);
