@@ -13,7 +13,7 @@ import java.net.URLEncoder;
 
 public class HttpRequest {
 
-    private final HttpClient client;
+    public final HttpClient client;
 
     public static void request(Torrent torrent) {
 
