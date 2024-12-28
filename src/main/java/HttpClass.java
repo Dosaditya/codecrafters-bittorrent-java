@@ -15,7 +15,11 @@ public class HttpClass {
 
     public final HttpClient client;
 
-    public static void request(Torrent torrent) {
+    public static void req(Torrent torrent){
+       request(Torrent torrent);
+    }
+
+    public void request(Torrent torrent) {
 
         String url = torrent.announce;
         String infoHash = Util.bytesToHex(torrent.infoHash);
