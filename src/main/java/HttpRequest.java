@@ -25,7 +25,7 @@ public class HttpRequest {
             try{
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(url))
-                    .get()
+                    .GET()
                     .addHeader("info_hash", URLEncoder.encode(infoHash, StandardCharsets.ISO_8859_1))
                     .addHeader("peer_id", URLEncoder.encode(peerId, StandardCharsets.ISO_8859_1))
                     .addHeader("port", URLEncoder.encode("6881", StandardCharsets.ISO_8859_1))
@@ -68,4 +68,3 @@ public class HttpRequest {
         }
 
     }
-}
