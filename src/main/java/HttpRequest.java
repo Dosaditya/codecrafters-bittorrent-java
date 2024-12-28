@@ -16,7 +16,7 @@ public class HttpRequest{
     public static void request(Torrent torrent){
         
         
-        try(CloseableHttpClient httpClient = HttpClients.createDefault()){
+        
             
             String url=torrent.announce;
             String infoHash = Util.bytesToHex(torrent.infoHash);
@@ -63,7 +63,7 @@ public class HttpRequest{
 
 
                 }
-            }
+            
 
         }
             catch (Exception e) {
