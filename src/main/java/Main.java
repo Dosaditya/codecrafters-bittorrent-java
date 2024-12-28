@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Main {
     private static final Gson gson = new Gson();
-    List<String> peerList;
+    static List<String> peerList;
 
     public static void main(String[] args) {
         String command = args[0];
