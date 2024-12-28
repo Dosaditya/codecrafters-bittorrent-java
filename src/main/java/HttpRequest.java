@@ -41,7 +41,7 @@ public class HttpRequest{
 
             
             try (Response response = client.newCall(request).execute()){
-                if(response.isSuccessful==false){
+                if(response.isSuccessful()==false){
                     System.out.println("Somethings Wrong");
                 }
                 else{
