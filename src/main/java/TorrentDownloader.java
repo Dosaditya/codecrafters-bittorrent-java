@@ -37,7 +37,8 @@ public class TorrentDownloader{
     
     static List<String> getPeerList(Torrent torrent) throws URISyntaxException, IOException, InterruptedException {
         String url = torrent.announce;
-        String infoHash = Util.bytesToHex(torrent.infoHash);
+        String infoHash = new String(Utils.hexStringToByteArray(torrent.getInfoHash()),
+        StandardCharsets.ISO_8859_1);
         byte[] peerIdBytes = Util.getRandomBytes(10);
         String peerId = Util.bytesToHex(peerIdBytes);
 
