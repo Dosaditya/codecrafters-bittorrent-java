@@ -16,7 +16,7 @@ public class HttpClass {
     public final HttpClient client;
 
     public static void req(Torrent torrent){
-       request(Torrent torrent);
+       request(torrent);
     }
 
     public void request(Torrent torrent) {
