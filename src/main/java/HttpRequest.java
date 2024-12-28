@@ -37,8 +37,7 @@ public class HttpRequest{
             httpGet.addHeader("compact",URLEncoder.encode("1",StandardCharsets.UTF_8));
 
             
-            HttpResponse response = (ClassicHttpResponse)httpClient.executeOpen(null, httpGet, null); 
-
+            try (CloseableHttpResponse response = httpClient.execute(httpGet)){
                 if(response.getCode()!=200){
                     System.out.println("Somethings Wrong");
                 }
@@ -61,11 +60,12 @@ public class HttpRequest{
 
 
                 }
+            }
 
         }
             catch (Exception e) {
                 e.printStackTrace();
-            } 
+            }
 
         }
     }
