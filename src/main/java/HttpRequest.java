@@ -36,7 +36,7 @@ public class HttpRequest{
                 .addHeader("uploaded",URLEncoder.encode("0",StandardCharsets.ISO_8859_1))
                 .addHeader("downloaded",URLEncoder.encode(infoHash,StandardCharsets.ISO_8859_1))
                 .addHeader("left",URLEncoder.encode(String.valueOf(torrent.length),StandardCharsets.ISO_8859_1))
-                .addHeader("compact",URLEncoder.encode("1",StandardCharsets.ISO_8859_1))
+                .addHeader("compact",URLEncoder.encode("1",StandardCharsets.ISO_8859_1)) 
                 .build();
 
             
