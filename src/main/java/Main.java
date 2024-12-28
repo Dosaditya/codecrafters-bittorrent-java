@@ -50,17 +50,19 @@ public class Main {
             }
         }
         else if("peers".equals(command)){
-            try{
+            
             String filePath = args[1];
 			Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
+            try {
+                peerList = TorrentDownloader.getPeerList(torrent);
+                for (String peer : peerList) {
+                    System.out.println(peer);
+                }
+            } catch (Exception e) {
+                System.out.println("Failed to get peer list: " + e.getMessage());
+            }
             
-            HttpClass.req(torrent);
-            }
-            catch (Exception e) {
-                // Handle the exception
-                System.err.println("An IOException occurred: " + e.getMessage());
-            }
-
+            
         }
          else {
             System.out.println("Unknown command: " + command);
