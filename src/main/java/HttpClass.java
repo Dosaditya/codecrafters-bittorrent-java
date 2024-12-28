@@ -11,7 +11,7 @@ import java.util.*;
 import java.nio.ByteBuffer;
 import java.net.URLEncoder;
 
-public class HttpRequest {
+public class HttpClass {
 
     public final HttpClient client;
 
