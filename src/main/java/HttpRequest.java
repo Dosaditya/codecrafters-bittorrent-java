@@ -46,9 +46,9 @@ public class HttpRequest{
                 }
                 else{
 
-                    byte[] responseBytes = response.body().bytes();
+                    //byte[] responseBytes = response.body().bytes();
                     Bencode bencode=new Bencode(true);
-                    Map<String ,Object> decodedResponse=bencode.decode(responseBytes,Type.DICTIONARY);
+                    Map<String ,Object> decodedResponse=bencode.decode(response.body(),Type.DICTIONARY);
                     System.out.println(decodedResponse);
                     System.out.println("eg");
 
