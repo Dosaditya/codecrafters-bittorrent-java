@@ -50,6 +50,8 @@ public class HttpRequest{
                     Bencode bencode=new Bencode(true);
                     Map<String ,Object> decodedResponse=bencode.decode(responseBytes,Type.DICTIONARY);
                     System.out.println(decodedResponse);
+                    System.out.println("eg");
+
                     byte[] peersBytes=((ByteBuffer)decodedResponse.get("peers")).array();
 
                     List<String> peerList = new ArrayList<>();
