@@ -30,13 +30,13 @@ public class HttpRequest{
             Request request = new Request.Builder()
                 .url(url)
                 .get() 
-                .addHeader("info_hash",URLEncoder.encode(infoHash,StandardCharsets.UTF_8))
-                .addHeader("peer_id",URLEncoder.encode(peerId,StandardCharsets.UTF_8))
-                .addHeader("port", URLEncoder.encode("6881",StandardCharsets.UTF_8))
-                .addHeader("uploaded",URLEncoder.encode("0",StandardCharsets.UTF_8))
-                .addHeader("downloaded",URLEncoder.encode(infoHash,StandardCharsets.UTF_8))
-                .addHeader("left",URLEncoder.encode(String.valueOf(torrent.length),StandardCharsets.UTF_8))
-                .addHeader("compact",URLEncoder.encode("1",StandardCharsets.UTF_8))
+                .addHeader("info_hash",URLEncoder.encode(infoHash,StandardCharsets.ISO_8859_1))
+                .addHeader("peer_id",URLEncoder.encode(peerId,StandardCharsets.ISO_8859_1))
+                .addHeader("port", URLEncoder.encode("6881",StandardCharsets.ISO_8859_1))
+                .addHeader("uploaded",URLEncoder.encode("0",StandardCharsets.ISO_8859_1))
+                .addHeader("downloaded",URLEncoder.encode(infoHash,StandardCharsets.ISO_8859_1))
+                .addHeader("left",URLEncoder.encode(String.valueOf(torrent.length),StandardCharsets.ISO_8859_1))
+                .addHeader("compact",URLEncoder.encode("1",StandardCharsets.ISO_8859_1))
                 .build();
 
             
