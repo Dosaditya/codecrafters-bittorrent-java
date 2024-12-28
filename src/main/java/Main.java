@@ -10,6 +10,7 @@ import java.nio.file.Path;
 
 public class Main {
     private static final Gson gson = new Gson();
+    List<String> peerList;
 
     public static void main(String[] args) {
         String command = args[0];
@@ -38,7 +39,7 @@ public class Main {
             System.out.println("Piece Hashes: ");
             byte[]piecesBytes =torrent.Hash; 
             for (int i = 0; i < piecesBytes.length; i += 20) {
-                byte[] hashBytes = new byte[20]; 
+                byte[] hashBytes = new byte[20];
                 System.arraycopy(piecesBytes, i, hashBytes, 0, 20); // Extract each 20-byte chunk
                 System.out.println(Util.bytesToHex(hashBytes)); // Convert to hex
             }
@@ -50,19 +51,21 @@ public class Main {
             }
         }
         else if("peers".equals(command)){
-            
             String filePath = args[1];
 			Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
-            try {
+            try{
                 peerList = TorrentDownloader.getPeerList(torrent);
                 for (String peer : peerList) {
                     System.out.println(peer);
                 }
-            } catch (Exception e) {
-                System.out.println("Failed to get peer list: " + e.getMessage());
+            
+            
             }
-            
-            
+            catch (Exception e) {
+                // Handle the exception
+                System.err.println("An IOException occurred: " + e.getMessage());
+            }
+
         }
          else {
             System.out.println("Unknown command: " + command);
