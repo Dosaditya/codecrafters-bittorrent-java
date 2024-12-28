@@ -38,7 +38,7 @@ public class Main {
             System.out.println("Piece Hashes: ");
             byte[]piecesBytes =torrent.Hash; 
             for (int i = 0; i < piecesBytes.length; i += 20) {
-                byte[] hashBytes = new byte[20];
+                byte[] hashBytes = new byte[20]; 
                 System.arraycopy(piecesBytes, i, hashBytes, 0, 20); // Extract each 20-byte chunk
                 System.out.println(Util.bytesToHex(hashBytes)); // Convert to hex
             }
