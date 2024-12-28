@@ -40,9 +40,7 @@ public class HttpRequest {
                     HttpResponse<byte[]> response=client.send(request, HttpResponse.BodyHandlers.ofByteArray());
 
              
-                if (response.code() != 200) {
-                    System.out.println("Somethings Wrong");
-                } else {
+                
 
                     //  = response.body().bytes();
                     Bencode bencode = new Bencode(true);
@@ -61,7 +59,7 @@ public class HttpRequest {
                     }
                     Util.print(peerList);
 
-                }
+                
 
             
         }
