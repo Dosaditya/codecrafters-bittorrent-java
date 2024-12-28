@@ -29,7 +29,7 @@ public class HttpRequest{
 
             Request request = new Request.Builder()
                 .url(url)
-                .get()
+                .get() 
                 .addHeader("info_hash",URLEncoder.encode(infoHash,StandardCharsets.UTF_8))
                 .addHeader("peer_id",URLEncoder.encode(peerId,StandardCharsets.UTF_8))
                 .addHeader("port", URLEncoder.encode("6881",StandardCharsets.UTF_8))
