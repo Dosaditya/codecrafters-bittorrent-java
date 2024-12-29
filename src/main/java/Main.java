@@ -5,14 +5,23 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.io.IOException;
+import java.net.Socket;
+
 
 
 
 public class Main {
     private static final Gson gson = new Gson();
-    static List<String> peerList;
+    
 
     public static void main(String[] args) {
+
+        List<String> peerList;
+        String peerIPAndPort;
+
+
+
         String command = args[0];
         if ("decode".equals(command)) {
             String bencodedValue = args[1];
@@ -51,7 +60,6 @@ public class Main {
             }
         }
         else if("peers".equals(command)){
-            
             try{
                 String filePath = args[1];
 			    Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
@@ -66,7 +74,27 @@ public class Main {
                 // Handle the exception
                 System.err.println("An IOException occurred: " + e.getMessage());
             }
-
+        }
+        else if("handshake".equals(command)){
+            try{
+                String filePath = args[1];
+			    Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
+                peerIPAndPort = args[2];
+                String peerIP = peerIPAndPort.split(":")[0];
+                int peerPort = Integer.parseInt(peerIPAndPort.split(":")[1]);
+                try (Socket socket = new Socket(peerIP, peerPort)){
+                    TCPService tcpService = new TCPService(socket);
+                    TorrentDownloader.performHandshake(Util.bytesToHex(torrent.infoHash), tcpService, false);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            
+            
+            }
+            catch (Exception e) {
+                // Handle the exception
+                System.err.println("An IOException occurred: " + e.getMessage());
+            }
         }
          else {
             System.out.println("Unknown command: " + command);

@@ -11,6 +11,10 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
 
 public class TorrentDownloader{
 
@@ -55,6 +59,36 @@ public class TorrentDownloader{
 
         HttpResponse<byte[]> response = httpClientService.sendGetRequest(requestURL);
         return getPeerListFromHTTPResponse(response);
+    }
+
+    static void performHandshake(String infoHash, TCPService tcpService, boolean isMagnetHandshake) {
+        byte[] handshakeMessage = createHandshakeMessage(infoHash, isMagnetHandshake);
+        tcpService.sendMessage(handshakeMessage);
+        byte[] handshakeResponse = tcpService.waitForHandshakeResponse();
+        //validateHandshakeResponse(handshakeResponse, Utils.hexStringToByteArray(infoHash), isMagnetHandshake);
+        byte[] peerIdBytes = Arrays.copyOfRange(handshakeResponse, handshakeResponse.length - 20, handshakeResponse.length);
+        String peerId = Util.bytesToHex(peerIdBytes);
+        System.out.println("Peer ID: " + peerId);
+    }
+
+    static byte[] createHandshakeMessage(String infoHash, boolean isMagnetHandshake) {
+        // create a handshake message to send to the peer
+        ByteArrayOutputStream handshakeMessage = new ByteArrayOutputStream();
+        try {
+            handshakeMessage.write(19);
+            handshakeMessage.write("BitTorrent protocol".getBytes());
+            byte[] reservedBytes = new byte[] {0,0,0,0,0,0,0,0};
+            if (isMagnetHandshake) {
+                reservedBytes[5] = 16;
+            }
+            handshakeMessage.write(reservedBytes);
+            handshakeMessage.write(Util.hexStringToByteArray(infoHash));
+            handshakeMessage.write("ABCDEFGHIJKLMNOPQRST".getBytes());
+            byte[] handshakeMessageBytes = handshakeMessage.toByteArray();
+            return handshakeMessageBytes;
+        } catch (Exception e) {
+            throw new RuntimeException("Error creating handshake message: " + e.getMessage());
+        }
     }
 
 }
