@@ -21,7 +21,7 @@ public class Main {
         String peerIPAndPort;
 
 
-
+        System.out.println(args[4]);
         String command = args[0]; 
         if ("decode".equals(command)) {
             String bencodedValue = args[1];
