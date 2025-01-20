@@ -136,7 +136,7 @@ public class TorrentDownloader{
             
         } catch (Exception e) {
             throw new RuntimeException("Error downloading piece from peer: " + e.getMessage());
-        }
+        } 
     }
 
     public static byte[] downloadPieceHelper(int pieceLength, TCPService tcpService, int index) throws Exception {
