@@ -21,7 +21,7 @@ public class Main {
         String peerIPAndPort;
 
 
-        System.out.println(args[4]);
+        
         String command = args[0]; 
         if ("decode".equals(command)) {
             String bencodedValue = args[1];
@@ -95,6 +95,14 @@ public class Main {
                 // Handle the exception
                 System.err.println("An IOException occurred: " + e.getMessage());
             }
+        }
+        else if("download_piece".equals(command)){
+            pieceStoragePath = args[2];
+            torrentFilePath = args[3];
+            Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
+            int pieceIndex = Integer.parseInt(args[4]);
+            byte[] piece = TorrentDownloader.downloadPiece(torrent, pieceIndex, false);
+
         }
          else {
             System.out.println("Unknown command: " + command);

@@ -21,6 +21,13 @@ public class TorrentDownloader{
 
     private static final int PORT = 6881;
 
+    private static final byte UNCHOKE_MESSAGE_ID = 1;
+    private static final byte INTERESTED_MESSAGE_ID = 2;
+    private static final byte BITFIELD_MESSAGE_ID = 5;
+    private static final byte REQUEST_MESSAGE_ID = 6;
+    private static final byte PIECE_MESSAGE_ID = 7;
+    private static final int BLOCK_SIZE = 16384;
+
     private static List<String> getPeerListFromHTTPResponse(HttpResponse<byte[]> response) {
         Bencode bencode = new Bencode(true);
         Map<String, Object> decodedResponse = bencode.decode(response.body(), Type.DICTIONARY);
@@ -90,5 +97,61 @@ public class TorrentDownloader{
             throw new RuntimeException("Error creating handshake message: " + e.getMessage());
         }
     }
+    
+    public static byte[] downloadPiece(Torrent torrent, int index, boolean isMagnetHandshake) {
+        List<String> peerList = null;
+        try {
+            peerList = getPeerList(torrent);
+        } catch (Exception e) {
+            throw new RuntimeException("Error getting peer list: " + e.getMessage());
+        }
 
+        if (peerList == null || peerList.size() == 0) {
+            throw new RuntimeException("No peers available to download from");
+        }
+        byte piece[] = null;
+        for (String peer : peerList) {
+            try {
+                System.out.println("Downloading piece from peer: " + peer);
+                piece = downloadPieceFromPeer(torrent, peer, index, isMagnetHandshake);
+                break;
+            } catch (Exception e) {
+                System.out.println("Error downloading piece from peer: " + peer + ", " + e.getMessage());
+            }
+        }
+        if (piece == null) {
+            throw new RuntimeException("Failed to download piece: " + index);
+        }
+        if (!validatePieceHash(torrent.getPieces().get(index), piece)) {
+            throw new RuntimeException("Piece hash validation failed: " + index);
+        }
+        return piece;
+    }
+
+    public static byte[] downloadPieceFromPeer(Torrent torrent, String peer, int index, boolean isMagnetHandshake) {
+        try (Socket socket = new Socket(peer.split(":")[0], Integer.parseInt(peer.split(":")[1]))) {
+            TCPService tcpService = new TCPService(socket);
+            int pieceLength = (int) torrent.plength;
+            if (isMagnetHandshake) {
+                performMagnetHandshakeOnPeer(tcpService, Util.bytesToHex(torrent.infoHash));
+                return downloadPieceHelper(tcpService, pieceLength, index);
+            } else {
+                performHandshake(Util.bytesToHex(torrent.infoHash), tcpService, false);
+                return downloadPieceHelper(pieceLength, tcpService, index);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error downloading piece from peer: " + e.getMessage());
+        }
+    }
+
+    public static byte[] downloadPieceHelper(int pieceLength, TCPService tcpService, int index) throws Exception {
+        byte[] bitfieldMessage = tcpService.waitForMessage();
+        if (bitfieldMessage[0] != BITFIELD_MESSAGE_ID) {
+            throw new RuntimeException("Expected bitfield message (5) from peer, but received different message: " + bitfieldMessage[0]);
+        }
+        System.out.println("Received bitfield message");
+        byte[] piece = downloadPieceHelper(tcpService, pieceLength, index);
+        return piece;
+    }
+    
 }
