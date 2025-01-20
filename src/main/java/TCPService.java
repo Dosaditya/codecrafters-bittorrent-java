@@ -64,6 +64,17 @@ public class TCPService implements Closeable{
         }
     }
 
+    public void sendMessage(byte messageId,
+                                    byte[] payload) throws IOException {
+        ByteBuffer buffer = ByteBuffer.allocate(4 +
+                1 + payload.length);
+        buffer.putInt(1 + payload.length);
+        buffer.put(messageId);
+        buffer.put(payload);
+        out.write(buffer.array());
+        out.flush();
+    }
+
     public static byte[] createRequestPayload(int index, int begin, int length) {
         ByteBuffer buffer = ByteBuffer.allocate(12);
         buffer.putInt(index);
