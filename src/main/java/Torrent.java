@@ -7,7 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.nio.ByteBuffer;
 import java.util.Map;
-import java.util.List;
+import java.util.*;
 
 
 
@@ -63,7 +63,7 @@ public class Torrent {
                 p.add(Util.bytesToHex(hashBytes)); // Convert to hex
             }
 
-            System.out.println(p);
+            //System.out.println(p);
  
 	}
 } 
