@@ -46,7 +46,7 @@ public class TCPService implements Closeable{
         try {
             // Read the length of the incoming message (assuming the length is sent as the first 4 bytes)
             byte[] lengthBuffer = new byte[4];
-            int bytesRead = in.read(lengthBuffer);
+            int bytesRead = in.read(lengthBuffer); 
             if (bytesRead != 4) {
                 throw new IOException("Failed to read message length");
             }
