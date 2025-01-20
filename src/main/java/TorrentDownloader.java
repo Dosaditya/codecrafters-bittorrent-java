@@ -182,7 +182,7 @@ public class TorrentDownloader{
     }
 
     private static boolean validatePieceHash(String expectedPieceHash, byte[] piece) {
-        String actualPieceHash = Utils.calculateSHA1(piece);
+        String actualPieceHash = Util.calculateSHA1(piece);
         if (!expectedPieceHash.equals(actualPieceHash)) {
             System.out.println("Hash validation failed. Expected hash: " + expectedPieceHash + ", Actual hash: " + actualPieceHash);
         }

@@ -27,6 +27,15 @@ public class Util{
     return byteArray;
   }
 
+  public static String calculateSHA1(byte[] bytes) {
+    try {
+        MessageDigest digest = MessageDigest.getInstance("SHA-1");
+        byte[] hash = digest.digest(bytes);
+        return byteToHexString(hash);
+    } catch (NoSuchAlgorithmException e) {
+        throw new RuntimeException("Error calculating SHA-1 hash: " + e.getMessage());
+    }
+}
 
 
 
