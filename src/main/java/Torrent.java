@@ -18,6 +18,7 @@ public class Torrent {
     public byte[] infoHash;
     public String pieceHash;
     public byte[] Hash;
+    public List<String> p;
 
 	
     public Torrent(byte[] bytes) throws NoSuchAlgorithmException{
@@ -52,6 +53,13 @@ public class Torrent {
         catch (Exception e) {
             throw new RuntimeException("Error decoding Bencoded data: " + e.getMessage(), e);
         }
+
+        byte[]piecesBytes =torrent.Hash; 
+            for (int i = 0; i < piecesBytes.length; i += 20) {
+                byte[] hashBytes = new byte[20];
+                System.arraycopy(piecesBytes, i, hashBytes, 0, 20); // Extract each 20-byte chunk
+                p.add(Util.bytesToHex(hashBytes)); // Convert to hex
+            }
  
 	}
 } 

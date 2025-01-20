@@ -122,7 +122,9 @@ public class TorrentDownloader{
         if (piece == null) {
             throw new RuntimeException("Failed to download piece: " + index);
         }
-        
+        if (!validatePieceHash(torrent.p.get(index), piece)) {
+            throw new RuntimeException("Piece hash validation failed: " + index);
+        }
         return piece;
     }
 
@@ -130,13 +132,16 @@ public class TorrentDownloader{
         try (Socket socket = new Socket(peer.split(":")[0], Integer.parseInt(peer.split(":")[1]))) {
             TCPService tcpService = new TCPService(socket);
             int pieceLength = (int) torrent.plength;
-           
+            if (isMagnetHandshake) {
+                performMagnetHandshakeOnPeer(tcpService, Util.bytesToHex(torrent.infoHash));
+                return downloadPieceHelper(tcpService, pieceLength, index);
+            } else {
                 performHandshake(Util.bytesToHex(torrent.infoHash), tcpService, false);
                 return downloadPieceHelper(pieceLength, tcpService, index);
-            
+            }
         } catch (Exception e) {
             throw new RuntimeException("Error downloading piece from peer: " + e.getMessage());
-        } 
+        }
     }
 
     public static byte[] downloadPieceHelper(int pieceLength, TCPService tcpService, int index) throws Exception {
@@ -149,4 +154,40 @@ public class TorrentDownloader{
         return piece;
     }
 
+    public static byte[] downloadPieceHelper(TCPService tcpService, int pieceLength, int index) throws Exception {
+        // send an interested message to the peer
+        byte[] interestedMessage = new byte[]{0, 0, 0, 1, INTERESTED_MESSAGE_ID};
+        tcpService.sendMessage(interestedMessage);
+        byte[] unchokeMessage = tcpService.waitForMessage();
+        if (unchokeMessage[0] != UNCHOKE_MESSAGE_ID) {
+            throw new RuntimeException("Expected unchoke message (1) from peer, but received different message: " + unchokeMessage[0]);
+        }
+        System.out.println("Received unchoke message");
+        int blocks = (int) Math.ceil((double) pieceLength / BLOCK_SIZE);
+        int offset = 0;
+        byte[] piece = new byte[pieceLength];
+        for (int blockIndex = 0; blockIndex < blocks; blockIndex++) {
+            int blockLength = Math.min(BLOCK_SIZE, pieceLength - offset);
+            byte[] requestPayload = TCPService.createRequestPayload(index, offset, blockLength);
+            tcpService.sendMessage(REQUEST_MESSAGE_ID, requestPayload);
+            byte[] pieceMessage = tcpService.waitForMessage();
+            if (pieceMessage[0] != PIECE_MESSAGE_ID) {
+                throw new RuntimeException("Expected piece message (7) from peer, but received different message: " + pieceMessage[0]);
+            }
+            System.out.println("Received piece message for block: " + blockIndex + " out of " + blocks);
+            System.arraycopy(pieceMessage, 9, piece, offset, blockLength);
+            offset += blockLength;
+        }
+        return piece;
+    }
+
+    private static boolean validatePieceHash(String expectedPieceHash, byte[] piece) {
+        String actualPieceHash = Utils.calculateSHA1(piece);
+        if (!expectedPieceHash.equals(actualPieceHash)) {
+            System.out.println("Hash validation failed. Expected hash: " + expectedPieceHash + ", Actual hash: " + actualPieceHash);
+        }
+        return expectedPieceHash.equals(actualPieceHash);
+    }
+
+    
 }

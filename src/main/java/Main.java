@@ -48,11 +48,9 @@ public class Main {
             System.out.println("Info Hash: "+Util.bytesToHex(torrent.infoHash));
             System.out.println("Piece Length: "+torrent.plength);
             System.out.println("Piece Hashes: ");
-            byte[]piecesBytes =torrent.Hash; 
-            for (int i = 0; i < piecesBytes.length; i += 20) {
-                byte[] hashBytes = new byte[20];
-                System.arraycopy(piecesBytes, i, hashBytes, 0, 20); // Extract each 20-byte chunk
-                System.out.println(Util.bytesToHex(hashBytes)); // Convert to hex
+            List<String> list=torrent.p;
+            for(int i=0;i<list.size();i++){
+                System.out.println(list.get(i));
             }
 
             }
@@ -99,11 +97,17 @@ public class Main {
             }
         }
         else if("download_piece".equals(command)){
-            pieceStoragePath = args[2];
-            torrentFilePath = args[3];
-            Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
-            int pieceIndex = Integer.parseInt(args[4]);
-            byte[] piece = TorrentDownloader.downloadPiece(torrent, pieceIndex, false);
+            try{
+                pieceStoragePath = args[2];
+                torrentFilePath = args[3];
+                Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
+                int pieceIndex = Integer.parseInt(args[4]);
+                byte[] piece = TorrentDownloader.downloadPiece(torrent, pieceIndex, false);
+            }
+            catch (Exception e) {
+                // Handle the exception
+                System.err.println("An IOException occurred: " + e.getMessage());
+            }
 
         }
          else {

@@ -53,9 +53,7 @@ public class TCPService implements Closeable{
             int messageLength = ByteBuffer.wrap(lengthBuffer).getInt();
             // Allocate a buffer of the appropriate size
             byte[] messageBuffer = new byte[messageLength];
-            for(int i=0;i<messageBuffer.length;i++){
-                System.out.println(messageBuffer[i]);
-            }
+            
             bytesRead = in.readNBytes(messageBuffer, 0, messageLength);
             if (bytesRead != messageLength) {
                 throw new IOException("Failed to read the complete message");
@@ -64,6 +62,14 @@ public class TCPService implements Closeable{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static byte[] createRequestPayload(int index, int begin, int length) {
+        ByteBuffer buffer = ByteBuffer.allocate(12);
+        buffer.putInt(index);
+        buffer.putInt(begin);
+        buffer.putInt(length);
+        return buffer.array();
     }
 
     @Override
