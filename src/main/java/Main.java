@@ -19,6 +19,8 @@ public class Main {
 
         List<String> peerList;
         String peerIPAndPort;
+        String torrentFilePath;
+        String pieceStoragePath;
 
 
         
