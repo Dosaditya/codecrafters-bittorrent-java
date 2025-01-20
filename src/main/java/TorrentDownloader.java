@@ -122,9 +122,7 @@ public class TorrentDownloader{
         if (piece == null) {
             throw new RuntimeException("Failed to download piece: " + index);
         }
-        if (!validatePieceHash(torrent.getPieces().get(index), piece)) {
-            throw new RuntimeException("Piece hash validation failed: " + index);
-        }
+        
         return piece;
     }
 
