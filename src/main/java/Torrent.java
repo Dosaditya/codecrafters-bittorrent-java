@@ -61,6 +61,8 @@ public class Torrent {
                 System.arraycopy(piecesBytes, i, hashBytes, 0, 20); // Extract each 20-byte chunk
                 p.add(Util.bytesToHex(hashBytes)); // Convert to hex
             }
+
+            System.out.println(p);
  
 	}
 } 
