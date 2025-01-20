@@ -1,5 +1,6 @@
 import java.util.*;
 import java.security.NoSuchAlgorithmException;
+import java.security.MessageDigest;
 
 
 public class Util{
@@ -32,7 +33,7 @@ public class Util{
     try {
         MessageDigest digest = MessageDigest.getInstance("SHA-1");
         byte[] hash = digest.digest(bytes);
-        return byteToHexString(hash);
+        return bytesToHex(hash);
     } catch (NoSuchAlgorithmException e) {
         throw new RuntimeException("Error calculating SHA-1 hash: " + e.getMessage());
     }

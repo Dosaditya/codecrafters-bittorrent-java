@@ -7,6 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.nio.ByteBuffer;
 import java.util.Map;
+import java.util.List;
 
 
 
@@ -54,7 +55,7 @@ public class Torrent {
             throw new RuntimeException("Error decoding Bencoded data: " + e.getMessage(), e);
         }
 
-        byte[]piecesBytes =torrent.Hash; 
+        byte[]piecesBytes =Hash; 
             for (int i = 0; i < piecesBytes.length; i += 20) {
                 byte[] hashBytes = new byte[20];
                 System.arraycopy(piecesBytes, i, hashBytes, 0, 20); // Extract each 20-byte chunk

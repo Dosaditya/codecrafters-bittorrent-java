@@ -99,7 +99,7 @@ public class Main {
         else if("download_piece".equals(command)){
             try{
                 pieceStoragePath = args[2];
-                torrentFilePath = args[3];
+                String filePath = args[3];
                 Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
                 int pieceIndex = Integer.parseInt(args[4]);
                 byte[] piece = TorrentDownloader.downloadPiece(torrent, pieceIndex, false);

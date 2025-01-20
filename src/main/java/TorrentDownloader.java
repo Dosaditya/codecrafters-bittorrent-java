@@ -132,13 +132,10 @@ public class TorrentDownloader{
         try (Socket socket = new Socket(peer.split(":")[0], Integer.parseInt(peer.split(":")[1]))) {
             TCPService tcpService = new TCPService(socket);
             int pieceLength = (int) torrent.plength;
-            if (isMagnetHandshake) {
-                performMagnetHandshakeOnPeer(tcpService, Util.bytesToHex(torrent.infoHash));
-                return downloadPieceHelper(tcpService, pieceLength, index);
-            } else {
+            
                 performHandshake(Util.bytesToHex(torrent.infoHash), tcpService, false);
                 return downloadPieceHelper(pieceLength, tcpService, index);
-            }
+            
         } catch (Exception e) {
             throw new RuntimeException("Error downloading piece from peer: " + e.getMessage());
         }
