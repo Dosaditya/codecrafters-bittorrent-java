@@ -54,7 +54,8 @@ public class Torrent {
         catch (Exception e) {
             throw new RuntimeException("Error decoding Bencoded data: " + e.getMessage(), e);
         }
-
+        
+        p=new ArrayList<>();
         byte[]piecesBytes =Hash; 
             for (int i = 0; i < piecesBytes.length; i += 20) {
                 byte[] hashBytes = new byte[20];
