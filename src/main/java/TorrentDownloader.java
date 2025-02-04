@@ -166,13 +166,13 @@ public class TorrentDownloader{
         for (int blockIndex = 0; blockIndex < blocks; blockIndex++) {
             int blockLength = Math.min(BLOCK_SIZE, pieceLength - offset);
             byte[] requestPayload = TCPService.createRequestPayload(index, offset, blockLength);
-            tcpService.sendMessage(REQUEST_MESSAGE_ID, requestPayload);
+            tcpService.sendMessage(REQUEST_MESSAGE_ID, requestPayload); 
             byte[] pieceMessage = tcpService.waitForMessage();
             if (pieceMessage[0] != PIECE_MESSAGE_ID) {
                 throw new RuntimeException("Expected piece message (7) from peer,  but received different message: " + pieceMessage[0]);
             }
             System.out.println("Received piece message for block: " + blockIndex + " out of " + blocks);
-            System.arraycopy(pieceMessage, 9, piece, offset, blockLength); 
+            System.arraycopy(pieceMessage, 9, piece, offset, blockLength);                                                                                                          
             offset += blockLength;
         }
         return piece;
