@@ -86,7 +86,7 @@ public class TorrentDownloader{
             handshakeMessage.write("BitTorrent protocol".getBytes());
             byte[] reservedBytes = new byte[] {0,0,0,0,0,0,0,0};
             if (isMagnetHandshake) {
-                reservedBytes[5] = 16;
+                reservedBytes[5] = 16; 
             }
             handshakeMessage.write(reservedBytes);
             handshakeMessage.write(Util.hexStringToByteArray(infoHash));
