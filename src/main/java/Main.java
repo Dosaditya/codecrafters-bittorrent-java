@@ -103,6 +103,7 @@ public class Main {
                 Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
                 int pieceIndex = Integer.parseInt(args[4]);
                 byte[] piece = TorrentDownloader.downloadPiece(torrent, pieceIndex, false);
+                Util.writePieceToFile(pieceStoragePath, piece);
             }
             catch (Exception e) {
                 // Handle the exception

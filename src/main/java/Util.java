@@ -1,7 +1,8 @@
 import java.util.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
-
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Util{
   
@@ -39,6 +40,19 @@ public class Util{
     }
 }
 
+public static void writePieceToFile(String dest, byte[] piece) {
+  Path path = Paths.get(dest);
+  try {
+      if (Files.exists(path)) {
+          Files.write(path, piece, StandardOpenOption.APPEND);
+      } else {
+          Files.write(path, piece);
+      }
+  } catch (IOException e) {
+      throw new RuntimeException("Error writing piece to file: " + e.getMessage());
+  }
+
+}
 
 
 }
