@@ -113,7 +113,7 @@ public class TorrentDownloader{
         
         
             try {
-                System.out.println("Downloading piece from peer: " + peer);
+                System.out.println("Downloading piece from peer: " + peerList.get(0));
                 
                 piece = downloadPieceFromPeer(torrent, peerList.get(0), index, isMagnetHandshake);
                 System.out.println("Wd");
