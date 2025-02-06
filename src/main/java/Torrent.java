@@ -68,7 +68,7 @@ public class Torrent {
 	}
     
     public long getPieceLength(int index) {
-        if (index * plength + plength > length) {
+        if (index * plength + plength > length) { 
             return length - index * plength;
         }
         return plength;
