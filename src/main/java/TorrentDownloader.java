@@ -110,17 +110,18 @@ public class TorrentDownloader{
             throw new RuntimeException("No peers available to download from");
         }
         byte piece[] = null;
-        for (String peer : peerList) {
+        
+        
             try {
                 System.out.println("Downloading piece from peer: " + peer);
                 
-                piece = downloadPieceFromPeer(torrent, peer, index, isMagnetHandshake);
+                piece = downloadPieceFromPeer(torrent, peerList.get(0), index, isMagnetHandshake);
                 System.out.println("Wd");
                 break;
             } catch (Exception e) {
                 System.out.println("Error downloading piece from peer: " + peer + ", " + e.getMessage());
             }
-        }
+        
         if (piece == null) {
             throw new RuntimeException("Failed to download piece: " + index);
         }
