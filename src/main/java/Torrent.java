@@ -66,4 +66,12 @@ public class Torrent {
             //System.out.println(p);
  
 	}
+    
+    public long getPieceLength(int index) {
+        if (index * plength + plength > length) {
+            return length - index * plength;
+        }
+        return plength;
+    }
+
 } 

@@ -133,7 +133,7 @@ public class TorrentDownloader{
     public static byte[] downloadPieceFromPeer(Torrent torrent, String peer, int index, boolean isMagnetHandshake) {
         try (Socket socket = new Socket(peer.split(":")[0], Integer.parseInt(peer.split(":")[1]))) {
             TCPService tcpService = new TCPService(socket);
-            int pieceLength = (int) torrent.plength;
+            int pieceLength = (int) torrent.getPieceLength(index);
              
                 performHandshake(Util.bytesToHex(torrent.infoHash), tcpService, false);
                 return downloadPieceHelper(pieceLength, tcpService, index);
