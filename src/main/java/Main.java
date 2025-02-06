@@ -101,7 +101,7 @@ public class Main {
                 pieceStoragePath = args[2];
                 String filePath = args[3];
                 Torrent torrent = new Torrent(Files.readAllBytes(Path.of(filePath)));
-                int pieceIndex = Integer.parseInt(args[4]);
+                int pieceIndex = Integer.parseInt(args[4]);System.out.println( pieceIndex );
                 byte[] piece = TorrentDownloader.downloadPiece(torrent, pieceIndex, false);
                 Util.writePieceToFile(pieceStoragePath, piece);
             }
