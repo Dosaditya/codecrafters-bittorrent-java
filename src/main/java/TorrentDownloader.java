@@ -119,7 +119,7 @@ public class TorrentDownloader{
                 System.out.println("Wd");
                 break;
             } catch (Exception e) {
-                System.out.println("Error downloading piece from peer: " + peer + ", " + e.getMessage());
+                System.out.println("Error downloading piece from peer: " + ", " + e.getMessage());
             }
         
         if (piece == null) {
