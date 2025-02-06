@@ -90,7 +90,7 @@ public class TorrentDownloader{
             }
             handshakeMessage.write(reservedBytes);
             handshakeMessage.write(Util.hexStringToByteArray(infoHash));
-            handshakeMessage.write("ABCDEFGHIJKLMNOPQRST".getBytes()); 
+            handshakeMessage.write("ABCDEFGHIJKLMNOPQRST".getBytes());  
             byte[] handshakeMessageBytes = handshakeMessage.toByteArray();
             return handshakeMessageBytes;
         } catch (Exception e) {
