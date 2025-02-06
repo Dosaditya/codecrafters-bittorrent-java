@@ -173,7 +173,7 @@ public class TorrentDownloader{
             if (pieceMessage[0] != PIECE_MESSAGE_ID) {
                 throw new RuntimeException("Expected piece message (7) from peer,  but received different message: " + pieceMessage[0]);
             }
-            System.out.println("Received piece message for block: " + blockIndex + " out of " + blocks);
+            System.out.println("Received piece message for block ff: " + blockIndex + " out of " + blocks);
             System.arraycopy(pieceMessage, 9, piece, offset, blockLength);                                                                                                          
             offset += blockLength;
         }
