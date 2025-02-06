@@ -116,7 +116,7 @@ public class TorrentDownloader{
                 
                 piece = downloadPieceFromPeer(torrent, peer, index, isMagnetHandshake);
                 break;
-                System.out.println("Wd");
+                
             } catch (Exception e) {
                 System.out.println("Error downloading piece from peer: " + peer + ", " + e.getMessage());
             }
