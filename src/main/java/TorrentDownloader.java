@@ -165,7 +165,7 @@ public class TorrentDownloader{
         int blocks = (int) Math.ceil((double) pieceLength / BLOCK_SIZE);
         int offset = 0;
         byte[] piece = new byte[pieceLength];
-        for (int blockIndex = 0; blockIndex < blocks; blockIndex++) {
+        for (int blockIndex = 0; blockIndex < blocks; blockIndex++){
             int blockLength = Math.min(BLOCK_SIZE, pieceLength - offset);
             byte[] requestPayload = TCPService.createRequestPayload(index, offset, blockLength);
             tcpService.sendMessage(REQUEST_MESSAGE_ID, requestPayload); 
